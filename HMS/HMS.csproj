@@ -181,6 +181,21 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Dashboard\Content\css\simple-sidebar.css" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-grid.css" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-grid.min.css" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-reboot.css" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-reboot.min.css" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap.css" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\js\bootstrap.bundle.js" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\js\bootstrap.bundle.min.js" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\js\bootstrap.js" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Areas\Dashboard\Content\vendor\jquery\jquery.js" />
+    <Content Include="Areas\Dashboard\Content\vendor\jquery\jquery.min.js" />
+    <Content Include="Areas\Dashboard\Content\vendor\jquery\jquery.slim.js" />
+    <Content Include="Areas\Dashboard\Content\vendor\jquery\jquery.slim.min.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -195,6 +210,18 @@
     <Content Include="Areas\Dashboard\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Dashboard\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Dashboard\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-grid.css.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-grid.min.css.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-reboot.css.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap.css.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\js\bootstrap.bundle.js.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\js\bootstrap.bundle.min.js.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\js\bootstrap.js.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\js\bootstrap.min.js.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\jquery\jquery.min.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\jquery\jquery.slim.min.map" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

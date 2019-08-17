@@ -24,6 +24,19 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+
+                    @if (User.IsInRole("Admin")) // If an admin is logged in
+                    {
+                        // 1st param is name of action link, 2nd param is action, 3rd param is controller
+                        <li>@Html.ActionLink("Dashboard", "Index", "Dashboard")</li>
+
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Dashboard", "Index", "Dashboard")</li>
+
+                    }
+
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

@@ -1,0 +1,53 @@
+﻿@model HMS.Areas.Dashboard.ViewModels.AccomadationTypesListingModel
+
+@if (Model != null && Model.AccomadationType != null && Model.AccomadationType.Count() > 0)
+{
+
+    <table id="productsTable" class="table table-striped">
+
+        <thead>
+
+            <!--Row tag-->
+            <tr>
+
+                <!--td is a cell-->
+                <th class="font-weight-bold">ID</th>
+                <th class="font-weight-bold">Name</th>
+                <th class="font-weight-bold">Description</th>
+                <th class="font-weight-bold">Action</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model.AccomadationType)
+            {
+                <tr>
+
+                    <td>@item.ID</td>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>
+                        <!--'id' attribute should not hold data, so we created our own elemtent attribute called 'data-id' and passed data of the items id-->
+                        <button class="btn btn-primary" data-id="@item.ID" type="button">Edit</button>
+                        <button class="btn btn-danger" data-id="@item.ID" type="button">Delete</button>
+                    </td>
+
+                </tr>
+            }
+
+
+        </tbody>
+
+    </table>
+
+}
+else
+{
+    <div class="alert alert-danger">
+        No Accomadation Types Found
+    </div>
+
+}

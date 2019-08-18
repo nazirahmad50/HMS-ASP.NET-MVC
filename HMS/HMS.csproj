@@ -167,8 +167,9 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Areas\Dashboard\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\AccomadationTypesController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
+    <Compile Include="Areas\Dashboard\ViewModels\AccomadationTypesModels.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -213,7 +214,6 @@
     <Content Include="Areas\Dashboard\Views\web.config" />
     <Content Include="Areas\Dashboard\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Dashboard\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Dashboard\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-grid.css.map" />
     <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-grid.min.css.map" />
     <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-reboot.css.map" />
@@ -238,6 +238,9 @@
     <Content Include="Areas\Dashboard\Content\vendor\webfonts\fa-solid-900.ttf" />
     <Content Include="Areas\Dashboard\Content\vendor\webfonts\fa-solid-900.woff" />
     <Content Include="Areas\Dashboard\Content\vendor\webfonts\fa-solid-900.woff2" />
+    <Content Include="Areas\Dashboard\Views\AccomadationTypes\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Views\AccomadationTypes\_Listing.cshtml" />
+    <Content Include="Areas\Dashboard\Views\AccomadationTypes\_Action.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -309,6 +312,10 @@
     <ProjectReference Include="..\HMS.Entities\HMS.Entities.csproj">
       <Project>{A7690190-D645-4571-9685-F58E19C148FF}</Project>
       <Name>HMS.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HMS.Services\HMS.Services.csproj">
+      <Project>{C0563DBD-750B-4E47-8DC5-6B5563095B35}</Project>
+      <Name>HMS.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

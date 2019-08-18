@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="row m-2">
+
+    <!--Title-->
+    <div class="col col-lg-12">
+        <br />
+        <h2 class="text-center">Accomadation Types</h2>
+        <br />
+    </div>
+
+    <!--Search Box and its Btns-->
+    <div class="col col-lg-12">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search...">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button">Search</button>
+                <button class="btn btn-secondary" type="button">Reset</button>
+                <button id="createBtn" class="btn btn-secondary" type="button" data-toggle="modal" data-target="#actionModal">Create</button>
+
+            </div>
+        </div>
+    </div>
+
+    <!--Table-->
+    <div class="col col-lg-12">
+        <!--This 'RenderAction' will render the 'Listing' view in this Index View -->
+        @{ Html.RenderAction("Listing"); }
+    </div>
+
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="actionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+    </div>
+</div>
+
+<script>
+
+    $("#createBtn").click(function () {
+
+      $.ajax({
+          method: "GET",
+          url: '@Url.Action("Action", "AccomadationTypes")',
+
+            })
+                .done(function (response) { // the response returns an html with values
+
+                    $("#actionModal .modal-dialog").html(response); // pass the response to the div with class '.modal-dialog' which is child div of '.actionModal'
+                })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+
+                    alert("failed");
+
+                });
+    })
+
+</script>
+
+

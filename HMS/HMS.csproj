@@ -241,6 +241,7 @@
     <Content Include="Areas\Dashboard\Views\AccomadationTypes\Index.cshtml" />
     <Content Include="Areas\Dashboard\Views\AccomadationTypes\_Listing.cshtml" />
     <Content Include="Areas\Dashboard\Views\AccomadationTypes\_Action.cshtml" />
+    <Content Include="Areas\Dashboard\Views\AccomadationTypes\_Delete.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

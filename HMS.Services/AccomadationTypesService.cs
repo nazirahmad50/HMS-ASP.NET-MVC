@@ -31,6 +31,9 @@ namespace HMS.Services
         }
         #endregion
 
+
+        #region CRUD
+
         /* using 'IEnumerable<>' instead of 'List<>' because List converts all the table values into a list
          * whereas IEnumerable converts the values into a list when its used in a foreach loop */
 
@@ -48,6 +51,18 @@ namespace HMS.Services
 
         }
 
+        public AccomadationType GetAccomadationTypesByID(int ID) 
+        {
+
+            var context = new HMSContext();
+
+            return context.AccomadationType.Find(ID);
+
+
+        }
+
+     
+
         public bool SaveAccomadationTypes(AccomadationType accomadationType) 
         {
 
@@ -61,5 +76,29 @@ namespace HMS.Services
 
         }
 
+        public bool UpdateAccomadationTypes(AccomadationType accomadationType)
+        {
+
+            var context = new HMSContext();
+
+            context.Entry(accomadationType).State = System.Data.Entity.EntityState.Modified; // modify the accomadation type 
+
+            return context.SaveChanges() > 0; 
+
+
+        }
+
+        public bool DeleteAccomadationTypes(AccomadationType accomadationType)
+        {
+
+            var context = new HMSContext();
+
+            context.Entry(accomadationType).State = System.Data.Entity.EntityState.Deleted; // delete accomadation type 
+
+            return context.SaveChanges() > 0;
+
+
+        }
+        #endregion
     }
 }

@@ -12,23 +12,19 @@ namespace HMS.Areas.Dashboard.Controllers
     public class AccomadationTypesController : Controller
     {
 
-        public ActionResult Index()
+        public ActionResult Index(string searchTerm)
         {
-            return View();
-        }
-
-        public ActionResult Listing()
-        {
-            AccomadationTypesListingModel model = new AccomadationTypesListingModel{
-
-                AccomadationType = AccomadationTypesService.Instance.GetAllAccomadationTypes()
-
+            AccomadationTypesListingModel model = new AccomadationTypesListingModel
+            {
+                AccomadationType = AccomadationTypesService.Instance.SearchAccomadationTypes(searchTerm), // find accomadation types based on searchTerm
+                SearchTerm = searchTerm
             };
 
-            return PartialView("_Listing", model);
+
+            return View(model);
         }
 
-
+  
 
         #region CREATE & EDIT
 

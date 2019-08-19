@@ -39,14 +39,21 @@ namespace HMS.Services
 
         /* before IEnumerable is being used in foreach loop it returns the query only such as 'Select * from AccomadationType'
          * whereas the 'List<>' converts the query into a list inside this method before its even used in foreach loop */
-        // so if there are a lot of records in table then 'IEnumerable' will do better inperformance than 'List'
-        public IEnumerable<AccomadationType> GetAllAccomadationTypes() // we cants use 'using' statement with IEnumerable
+        // so if there are a lot of records in table then 'IEnumerable' will do better in performance than 'List'
+        public IEnumerable<AccomadationType> SearchAccomadationTypes(string searchTerm) // we cants use 'using' statement with IEnumerable
         {
 
             var context = new HMSContext();
 
-            // 'context.AccomadationType' means select * from AccomadationType
-            return context.AccomadationType.AsEnumerable(); 
+            var accomadationType = context.AccomadationType.AsQueryable(); // 'AsQueryable' will allow us to use query on the AccomadationType such as using 'Where' on it
+
+            if (!string.IsNullOrEmpty(searchTerm)) 
+            {
+                // check if the searchterm exist in the database column Name
+                accomadationType = accomadationType.Where(x => x.Name != null && x.Name.ToLower().Contains(searchTerm.ToLower()));
+            }
+
+            return accomadationType.AsEnumerable();
 
 
         }

@@ -48,7 +48,8 @@
 
                     if (response.Success) { // if json data called 'Success' is true
 
-                        location.reload(); // reload the current page
+                        // change the href of the window location to the Index page after deletation
+                        window.location.href = "@Url.Action("Index", "AccomadationTypes")";
 
                     } else {
 

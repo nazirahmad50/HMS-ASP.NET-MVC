@@ -1,0 +1,60 @@
+﻿@model HMS.Areas.Dashboard.ViewModels.AccomadationPackagesListingModel
+
+
+@if (Model != null && Model.AccomadationPackage != null && Model.AccomadationPackage.Count() > 0)
+{
+
+    <table id="productsTable" class="table table-striped">
+
+        <thead>
+
+            <!--Row tag-->
+            <tr>
+
+                <!--td is a cell-->
+                <th class="font-weight-bold">Name</th>
+                <th class="font-weight-bold">NoOfRoom</th>
+                <th class="font-weight-bold">FeePerNight</th>
+                <th class="font-weight-bold">Action</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model.AccomadationPackage)
+            {
+            <tr>
+
+                <td>@item.Name</td>
+                <td>@item.NoOfRoom</td>
+                <td>@item.FeePerNight</td>
+
+                <td>
+
+                    <button data-href="@Url.Action("Action", "AccomadationPackages", new { ID=item.ID})" class="dataBtn btn btn-primary" type="button" data-toggle="modal" data-target="#actionModal">
+                        <i class="fas fa-edit mr-1"></i>Edit
+                    </button>
+
+                    <button data-href="@Url.Action("Delete", "AccomadationPackages", new { ID=item.ID})" class="dataBtn btn btn-danger" type="button" data-toggle="modal" data-target="#actionModal">
+                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                    </button>
+                </td>
+
+            </tr>
+            }
+
+
+        </tbody>
+
+    </table>
+
+}
+else
+{
+    <div class="alert alert-danger">
+        No Accomadation Packages Found
+    </div>
+
+}

@@ -46,8 +46,10 @@ namespace HMS.Areas.Dashboard.Controllers
                 model.Name = accomadationPackage.Name;
                 model.NoOfRoom = accomadationPackage.NoOfRoom;
                 model.FeePerNight = accomadationPackage.FeePerNight;
+                model.AccomadationTypeID = accomadationPackage.AccomadationTypeID;
 
             }
+            model.AccomadationTypes = AccomadationTypesService.Instance.GetAllAccomadationTypes();
 
 
             return PartialView("_Action", model);
@@ -59,8 +61,7 @@ namespace HMS.Areas.Dashboard.Controllers
 
             JsonResult json = new JsonResult { JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
-            var result = false;
-
+            bool result;
             if (model.ID > 0) // Editing record
             {
 
@@ -68,7 +69,9 @@ namespace HMS.Areas.Dashboard.Controllers
                     ID = model.ID,
                     Name = model.Name,
                     NoOfRoom = model.NoOfRoom,
-                    FeePerNight = model.FeePerNight
+                    FeePerNight = model.FeePerNight,
+                    AccomadationTypeID = model.AccomadationTypeID,
+                  
                 };
 
                 result = AccomadationPackagesService.Instance.UpdateAccomadationPackages(accomadationPackage); // update accomadation packages in databse
@@ -81,7 +84,10 @@ namespace HMS.Areas.Dashboard.Controllers
                     ID = model.ID,
                     Name = model.Name,
                     NoOfRoom = model.NoOfRoom,
-                    FeePerNight = model.FeePerNight
+                    FeePerNight = model.FeePerNight,
+                    AccomadationTypeID = model.AccomadationTypeID,
+
+
                 }; // create AccomadationType object and set its props
 
                 result = AccomadationPackagesService.Instance.SaveAccomadationPackages(accomadationPackage); // save accomadationPackage in database

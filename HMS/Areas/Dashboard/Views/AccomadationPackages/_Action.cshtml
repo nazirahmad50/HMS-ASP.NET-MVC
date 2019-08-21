@@ -24,16 +24,32 @@
             <!--Form-->
             <form id="actionForm">
                 <div class="form-group">
+                    <label>AccomadationTypes</label>
+                    <select class="form-control" name="AccomadationTypeID">
+                        @if (Model.AccomadationTypes != null)
+                        {
+                            foreach (var item in Model.AccomadationTypes)
+                            {
+                                <option value="@item.ID" @(item.ID == Model.AccomadationTypeID ? "selected" : string.Empty)>@item.Name</option>
+                            }
+                        }
+                        else
+                        {
+                            <option>No AccomadationTypes Found</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
                     <label>Name</label>
                     <input class="form-control" name="Name" placeholder="Enter Accomadation Package Name" value="@Model.Name">
                 </div>
                 <div class="form-group">
                     <label>No Of Rooms</label>
-                    <textarea class="form-control" name="Description" placeholder="Enter Accomadation Package NoOfRoom">@Model.NoOfRoom</textarea>
+                    <input class="form-control" name="NoOfRoom" placeholder="Enter Accomadation Package NoOfRoom" value="@Model.NoOfRoom">
                 </div>
                 <div class="form-group">
                     <label>Fee Per Night</label>
-                    <textarea class="form-control" name="Description" placeholder="Enter Accomadation Package FeePerNight">@Model.FeePerNight</textarea>
+                    <input class="form-control" name="FeePerNight" placeholder="Enter Accomadation Package FeePerNight" value="@Model.FeePerNight">
                 </div>
                 <input type="hidden" value="@Model.ID" />
             </form>
@@ -55,7 +71,6 @@
 <script>
 
     $("#saveAction").click(function () {
-
       $.ajax({
           method: "POST",
           url: '@Url.Action("Action", "AccomadationPackages")',

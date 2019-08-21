@@ -107,5 +107,15 @@ namespace HMS.Services
 
         }
         #endregion
+
+        public IEnumerable<AccomadationType> GetAllAccomadationTypes()
+        {
+
+            var context = new HMSContext();
+
+            return context.AccomadationType.AsEnumerable();
+
+
+        }
     }
 }

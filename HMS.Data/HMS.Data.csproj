@@ -63,6 +63,14 @@
     <Compile Include="Migrations\201908151756525_identityFramework.Designer.cs">
       <DependentUpon>201908151756525_identityFramework.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908211810436_makeObejctsVirtual.cs" />
+    <Compile Include="Migrations\201908211810436_makeObejctsVirtual.Designer.cs">
+      <DependentUpon>201908211810436_makeObejctsVirtual.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908211929103_modifyAccomadationIDInAccomadationpackage.cs" />
+    <Compile Include="Migrations\201908211929103_modifyAccomadationIDInAccomadationpackage.Designer.cs">
+      <DependentUpon>201908211929103_modifyAccomadationIDInAccomadationpackage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -82,6 +90,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908151756525_identityFramework.resx">
       <DependentUpon>201908151756525_identityFramework.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908211810436_makeObejctsVirtual.resx">
+      <DependentUpon>201908211810436_makeObejctsVirtual.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908211929103_modifyAccomadationIDInAccomadationpackage.resx">
+      <DependentUpon>201908211929103_modifyAccomadationIDInAccomadationpackage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

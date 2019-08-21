@@ -16,6 +16,6 @@ namespace HMS.Entities
         public int Duration { get; set; }
 
         public int AccomadationID { get; set; }
-        public Accomadation Accomadation { get; set; } // Accomadation object
+        public virtual Accomadation Accomadation { get; set; } // Accomadation object
     }
 }

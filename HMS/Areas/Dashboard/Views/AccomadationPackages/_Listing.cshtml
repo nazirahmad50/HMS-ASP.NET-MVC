@@ -13,8 +13,11 @@
 
                 <!--td is a cell-->
                 <th class="font-weight-bold">Name</th>
+                <th class="font-weight-bold">AccomadationType</th>
                 <th class="font-weight-bold">NoOfRoom</th>
                 <th class="font-weight-bold">FeePerNight</th>
+
+
                 <th class="font-weight-bold">Action</th>
 
             </tr>
@@ -28,8 +31,17 @@
             <tr>
 
                 <td>@item.Name</td>
+
+                <td>
+                    @if (item.AccomadationType != null)
+                    {
+                        @item.AccomadationType.Name
+
+
+                    }
+                </td>
                 <td>@item.NoOfRoom</td>
-                <td>@item.FeePerNight</td>
+                <td>£@item.FeePerNight</td>
 
                 <td>
 

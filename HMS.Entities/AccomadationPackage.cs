@@ -16,8 +16,9 @@ namespace HMS.Entities
         public decimal FeePerNight { get; set; }
         public string Name { get; set; }
 
-        public int AccomadationID { get; set; }
-        public AccomadationType AccomadationType { get; set; } // AccomadationType object
+        public int AccomadationTypeID { get; set; }
+        // virtual allows us to access the props of the AccomadationType object
+        public virtual AccomadationType AccomadationType { get; set; } // AccomadationType object
 
 
     }

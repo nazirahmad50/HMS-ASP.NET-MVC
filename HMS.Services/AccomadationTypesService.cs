@@ -61,9 +61,13 @@ namespace HMS.Services
         public AccomadationType GetAccomadationTypesByID(int ID) 
         {
 
-            var context = new HMSContext();
+            // in Post Delete method we are calling 'GetAccomadationsByID' 'DeleteAccomadations' services one after another
+            // so we have to dispose of one of these context as we are calling two services in the post Delete method
+            using (var context = new HMSContext())
+            {
+                return context.AccomadationType.Find(ID);
 
-            return context.AccomadationType.Find(ID);
+            }
 
 
         }

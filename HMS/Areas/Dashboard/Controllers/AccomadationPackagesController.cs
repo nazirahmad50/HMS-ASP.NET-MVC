@@ -1,6 +1,7 @@
 ﻿using HMS.Areas.Dashboard.ViewModels;
 using HMS.Entities;
 using HMS.Services;
+using HMS.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,16 +12,22 @@ namespace HMS.Areas.Dashboard.Controllers
 {
     public class AccomadationPackagesController : Controller
     {
-        public ActionResult Index(string searchTerm, int? accomadationTypeID)
+        public ActionResult Index(string searchTerm, int? accomadationTypeID, int? page)
         {
+            int pageSize = 3; //TODO: Set page size in Configuration
+            
+            page = page ?? 1; // The ?? operator returns the left-hand operand if it is not null, or else it returns the right operand
+
+            int totalRecords = AccomadationPackagesService.Instance.SearchAccomadationPackagesCount(searchTerm, accomadationTypeID); // get total accomadation Packages based on search criteria
 
             AccomadationPackagesListingModel model = new AccomadationPackagesListingModel
             {
-
-                AccomadationPackage = AccomadationPackagesService.Instance.SearchAccomadationPackages(searchTerm, accomadationTypeID), // search based on searchTerm and accomadationTypeID
-                SearchTerm = searchTerm,
+                
+                AccomadationPackage = AccomadationPackagesService.Instance.SearchAccomadationPackages(searchTerm, accomadationTypeID, pageSize, page.Value), 
                 AccomadationType = AccomadationTypesService.Instance.GetAllAccomadationTypes(), // get all accomadation types
-                AccomadationtypeID = accomadationTypeID
+                AccomadationtypeID = accomadationTypeID,
+                Pager = new Pager(totalRecords,page,pageSize),
+                TotalRecords = totalRecords
             };
            
 

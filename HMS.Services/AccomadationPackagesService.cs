@@ -34,7 +34,7 @@ namespace HMS.Services
         #region CRUD
 
        
-        public IEnumerable<AccomadationPackage> SearchAccomadationPackages(string searchTerm, int? accomadationTypeID) // we cants use 'using' statement with IEnumerable
+        public IEnumerable<AccomadationPackage> SearchAccomadationPackages(string searchTerm, int? accomadationTypeID, int pageSize, int page) // we cants use 'using' statement with IEnumerable
         {
 
             var context = new HMSContext();
@@ -55,7 +55,12 @@ namespace HMS.Services
                 accomadationPackage = accomadationPackage.Where(x => x.AccomadationTypeID == accomadationTypeID.Value);
             }
 
-            return accomadationPackage.AsEnumerable();
+            // skip = (1 - 1) * 3 = 0 * 3 = 0
+            // skip = (2 - 1) * 3 = 1 * 3 = 3
+            // skip = (3 - 1) * 3 = 2 * 3 = 6
+            var skip = (page - 1) * pageSize;
+
+            return accomadationPackage.OrderBy(x=>x.AccomadationTypeID).Skip(skip).Take(pageSize).AsEnumerable(); // we have to use the 'sortBy' if we are going to use 'Skip'
 
 
         }
@@ -69,8 +74,6 @@ namespace HMS.Services
 
 
         }
-
-
 
         public bool SaveAccomadationPackages(AccomadationPackage accomadationPackage)
         {
@@ -110,6 +113,33 @@ namespace HMS.Services
         }
         #endregion
 
-      
+        public int SearchAccomadationPackagesCount(string searchTerm, int? accomadationTypeID) 
+        {
+
+            var context = new HMSContext();
+
+            var accomadationPackage = context.AccomadationPackage.AsQueryable(); // 'AsQueryable' will allow us to use query on the AccomadationType such as using 'Where' on it
+
+            // find based on searchTerm
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                // check if the searchterm exist in the database column Name
+                accomadationPackage = accomadationPackage.Where(x => x.Name != null && x.Name.ToLower().Contains(searchTerm.ToLower()));
+            }
+
+            // find based on accomadationTypeID
+            if (accomadationTypeID.HasValue && accomadationTypeID.Value > 0)
+            {
+                // check if the searchterm exist in the database column Name
+                accomadationPackage = accomadationPackage.Where(x => x.AccomadationTypeID == accomadationTypeID.Value);
+            }
+
+
+
+            return accomadationPackage.Count();
+
+
+        }
+
     }
 }

@@ -34,17 +34,25 @@ namespace HMS.Services
         #region CRUD
 
        
-        public IEnumerable<AccomadationPackage> SearchAccomadationPackages(string searchTerm) // we cants use 'using' statement with IEnumerable
+        public IEnumerable<AccomadationPackage> SearchAccomadationPackages(string searchTerm, int? accomadationTypeID) // we cants use 'using' statement with IEnumerable
         {
 
             var context = new HMSContext();
 
             var accomadationPackage = context.AccomadationPackage.AsQueryable(); // 'AsQueryable' will allow us to use query on the AccomadationType such as using 'Where' on it
 
+            // find based on searchTerm
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 // check if the searchterm exist in the database column Name
                 accomadationPackage = accomadationPackage.Where(x => x.Name != null && x.Name.ToLower().Contains(searchTerm.ToLower()));
+            }
+
+            // find based on accomadationTypeID
+            if (accomadationTypeID.HasValue && accomadationTypeID.Value > 0)
+            {
+                // check if the searchterm exist in the database column Name
+                accomadationPackage = accomadationPackage.Where(x => x.AccomadationTypeID == accomadationTypeID.Value);
             }
 
             return accomadationPackage.AsEnumerable();

@@ -4,39 +4,58 @@
 }
 
 
-<div class="row m-2">
+    <div class="row m-2">
 
-    <!--Title-->
-    <div class="col col-lg-12">
-        <br />
-        <h2 class="text-center">Accomadation Packages</h2>
-        <br />
-    </div>
+        <!--Title-->
+        <div class="col col-lg-12">
+            <br />
+            <h2 class="text-center">Accomadation Packages</h2>
+            <br />
+        </div>
 
-    <!--Search Box and its Btns-->
-    <div class="col col-lg-12">
-        <form>
-            <div class="input-group">
-                <input type="text" name="searchTerm" class="form-control" placeholder="Search..." required value="@Model.SearchTerm">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search mr-1"></i>Search</button>
-                    <a href="@Url.Action("Index","AccomadationPackages")" class="btn btn-outline-secondary"><i class="fas fa-redo-alt mr-1"></i>Reset</a>
-                    <button data-href="@Url.Action("Action", "AccomadationPackages")" class="dataBtn btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#actionModal"><i class="fas fa-plus mr-1"></i>Create</button>
+        <!--Search Box and its Btns-->
+        <div class="col col-lg-12">
+            <form>
+                <div class="input-group">
+                    <!--SEARCH INPUT-->
+                    <input type="text" name="searchTerm" class="form-control" placeholder="Search..." value="@Model.SearchTerm">
 
+                    <!--ACCOMADATION TYPE LIST-->
+                    @if (Model.AccomadationType != null && Model.AccomadationType.Count() > 0)
+                    {
+                        <select name="AccomadationTypeID" class="form-control">
+                            <option value="0">Please Select Accomadation Type</option> <!--default option and its accomadationTypeID will be 0-->
+
+                            @foreach (var item in Model.AccomadationType)
+                            {
+                                string selected = item.ID == Model.AccomadationtypeID ? "selected" : string.Empty;
+                                <option value="@item.ID" @selected>@item.Name</option>
+                            }
+                        </select>
+                    }
+
+                    <!--RESET, CREATE BTNS-->
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search mr-1"></i>Search</button>
+                        <a href="@Url.Action("Index","AccomadationPackages")" class="btn btn-outline-secondary"><i class="fas fa-redo-alt mr-1"></i>Reset</a>
+                        <button data-href="@Url.Action("Action", "AccomadationPackages")" class="dataBtn btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#actionModal">
+                            <i class="fas fa-plus mr-1"></i>Create
+                        </button>
+
+                    </div>
                 </div>
-            </div>
 
-        </form>
+            </form>
+
+        </div>
+
+        <!--Table-->
+        <div class="col col-lg-12">
+            <!--This 'RenderPartial' will render the '_Listing' partial view in this Index View and pass the Model to it -->
+            @{ Html.RenderPartial("_Listing", Model); }
+        </div>
 
     </div>
-
-    <!--Table-->
-    <div class="col col-lg-12">
-        <!--This 'RenderPartial' will render the '_Listing' partial view in this Index View and pass the Model to it -->
-        @{ Html.RenderPartial("_Listing", Model); }
-    </div>
-
-</div>
 
 
 <!-- Modal -->

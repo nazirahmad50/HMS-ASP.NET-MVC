@@ -9,7 +9,11 @@ namespace HMS.Areas.Dashboard.ViewModels
     public class AccomadationPackagesListingModel
     {
         public IEnumerable<AccomadationPackage> AccomadationPackage { get; set; }
+        public IEnumerable<AccomadationType> AccomadationType { get; set; }
+        public int? AccomadationtypeID { get; set; }
         public string SearchTerm { get; set; }
+        
+
     }
 
     public class AccomadationPackagesActionModel

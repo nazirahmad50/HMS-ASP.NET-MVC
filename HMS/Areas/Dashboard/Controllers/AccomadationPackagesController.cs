@@ -11,17 +11,18 @@ namespace HMS.Areas.Dashboard.Controllers
 {
     public class AccomadationPackagesController : Controller
     {
-        public ActionResult Index(string searchTerm)
+        public ActionResult Index(string searchTerm, int? accomadationTypeID)
         {
 
             AccomadationPackagesListingModel model = new AccomadationPackagesListingModel
             {
 
-                AccomadationPackage = AccomadationPackagesService.Instance.SearchAccomadationPackages(searchTerm),
-                SearchTerm = searchTerm
-
-
+                AccomadationPackage = AccomadationPackagesService.Instance.SearchAccomadationPackages(searchTerm, accomadationTypeID), // search based on searchTerm and accomadationTypeID
+                SearchTerm = searchTerm,
+                AccomadationType = AccomadationTypesService.Instance.GetAllAccomadationTypes(), // get all accomadation types
+                AccomadationtypeID = accomadationTypeID
             };
+           
 
             return View(model);
         }

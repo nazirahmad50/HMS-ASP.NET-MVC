@@ -1,0 +1,89 @@
+﻿@model HMS.Areas.Dashboard.ViewModels.UserListingViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row m-2">
+
+    <!--Title-->
+    <div class="col col-lg-12">
+        <br />
+        <h2 class="text-center">Users(@Model.TotalRecords)</h2>
+        <br />
+    </div>
+
+    <!--Search Box and its Btns-->
+    <div class="col col-lg-12">
+        <form>
+            <div class="input-group">
+                <!--SEARCH INPUT-->
+                <input type="text" name="searchTerm" class="form-control" placeholder="Search based on email..." value="@Model.SearchTerm">
+
+                <!--ACCOMADATION Packages LIST-->
+                @if (Model.Roles != null && Model.Roles.Count() > 0)
+                {
+                    <select name="RolesID" class="form-control">
+                        <option value="0">Please Select User Role</option> <!--default option and its AccomadationPackageID will be 0-->
+
+                        @foreach (var item in Model.Roles)
+                        {
+                            string selected = item.Id == Model.RoleID ? "selected" : string.Empty;
+                            <option value="@item.Id" @selected>@item.Name</option>
+                        }
+                    </select>
+                }
+
+                <!--RESET, CREATE BTNS-->
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search mr-1"></i>Search</button>
+                    <a href="@Url.Action("Index","User")" class="btn btn-outline-secondary"><i class="fas fa-redo-alt mr-1"></i>Reset</a>
+                    <button data-href="@Url.Action("Action", "User")" class="dataBtn btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#actionModal">
+                        <i class="fas fa-plus mr-1"></i>Create
+                    </button>
+
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+    <!--Table-->
+    <div class="col col-lg-12">
+        <!--This 'RenderPartial' will render the '_Listing' partial view in this Index View and pass the Model to it -->
+        @{ Html.RenderPartial("_Listing", Model); }
+    </div>
+
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="actionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+    </div>
+</div>
+
+<script>
+
+    $(".dataBtn").click(function () {
+        
+      $.ajax({
+          method: "GET",
+          url: $(this).attr("data-href"),
+
+            })
+                .done(function (response) { // the response returns an html with values
+
+                    $("#actionModal .modal-dialog").html(response); // pass the response to the div with class '.modal-dialog' which is child div of '.actionModal'
+                })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+
+                    alert("failed");
+
+                });
+    })
+
+</script>
+
+

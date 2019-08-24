@@ -1,0 +1,109 @@
+﻿@model HMS.Areas.Dashboard.ViewModels.UserListingViewModel
+
+
+@if (Model != null && Model.Users != null && Model.Users.Count() > 0)
+{
+
+    <table id="productsTable" class="table table-striped">
+
+        <thead>
+
+            <!--Row tag-->
+            <tr>
+
+                <!--td is a cell-->
+                <th class="font-weight-bold">Full Name</th>
+                <th class="font-weight-bold">UserName</th>
+                <th class="font-weight-bold">Email</th>
+
+                <th class="font-weight-bold">Role</th>
+                <th class="font-weight-bold">Action</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model.Users)
+            {
+            <tr>
+
+                <td>@item.FullName</td>
+                <td>@item.UserName</td>
+                <td>@item.Email</td>
+
+
+
+                <td>
+                    @*@if (item.AccomadationPackage != null)
+            {
+                @item.AccomadationPackage.Name
+
+
+            }*@
+                </td>
+
+                <td>
+
+                    <button data-href="@Url.Action("Action", "User", new { ID=item.Id})" class="dataBtn btn btn-primary" type="button" data-toggle="modal" data-target="#actionModal">
+                        <i class="fas fa-edit mr-1"></i>Edit
+                    </button>
+
+                    <button data-href="@Url.Action("Delete", "User", new { ID=item.Id})" class="dataBtn btn btn-danger" type="button" data-toggle="modal" data-target="#actionModal">
+                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                    </button>
+                </td>
+
+            </tr>
+            }
+
+
+        </tbody>
+
+    </table>
+
+    <!-- PAGINATION -->
+    if (Model.Pager.EndPage > 1)
+    {
+        <nav>
+            <ul class="pagination">
+                @if (Model.Pager.CurrentPage > 1)
+                {
+                    <li class="page-item" >
+                        <a class="page-link" href="@Url.Action("Index", "User")"><i class="fas fa-angle-double-left"></i></a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", "User", new { page = (Model.Pager.CurrentPage - 1), searchTerm=Model.SearchTerm ,roleID= Model.RoleID})">
+                         <i class="fas fa-angle-left"></i></a>
+                    </li>
+                }
+
+                @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+                {
+                    <li class="page-item @(page == Model.Pager.CurrentPage ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Index", "User", new { page = page, searchTerm=Model.SearchTerm ,roleID= Model.RoleID})">@page</a>
+                    </li>
+                }
+
+                @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", "User", new { page = (Model.Pager.CurrentPage + 1), searchTerm=Model.SearchTerm ,roleID= Model.RoleID})"><i class="fas fa-angle-right"></i></a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", "User", new { page = (Model.Pager.TotalPages), searchTerm=Model.SearchTerm ,roleID= Model.RoleID})"><i class="fas fa-angle-double-right"></i></a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
+
+}
+else
+{
+    <div class="alert alert-danger">
+        No Users Found
+    </div>
+
+}

@@ -71,6 +71,10 @@
     <Compile Include="Migrations\201908211929103_modifyAccomadationIDInAccomadationpackage.Designer.cs">
       <DependentUpon>201908211929103_modifyAccomadationIDInAccomadationpackage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908241713588_addAdditionalUserProps.cs" />
+    <Compile Include="Migrations\201908241713588_addAdditionalUserProps.Designer.cs">
+      <DependentUpon>201908241713588_addAdditionalUserProps.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -96,6 +100,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908211929103_modifyAccomadationIDInAccomadationpackage.resx">
       <DependentUpon>201908211929103_modifyAccomadationIDInAccomadationpackage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908241713588_addAdditionalUserProps.resx">
+      <DependentUpon>201908241713588_addAdditionalUserProps.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

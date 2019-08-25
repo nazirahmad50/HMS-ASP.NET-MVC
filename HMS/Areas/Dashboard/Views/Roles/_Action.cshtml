@@ -1,0 +1,80 @@
+﻿@model HMS.Areas.Dashboard.ViewModels.RolesActionViewModel
+
+@if (Model != null)
+{
+
+    <div class="modal-content">
+        <div class="modal-header">
+            @if (!string.IsNullOrEmpty(Model.ID))
+            {
+            <h5 class="modal-title"> Edit Role</h5>
+
+            }
+            else
+            {
+        <h5 class="modal-title"> Create Role</h5>
+            }
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+
+            <!--Form-->
+            <form id="actionForm">
+       
+                <div class="form-group">
+                    <label>Name</label>
+                    <input class="form-control" name="Name" placeholder="Enter Name" value="@Model.Name">
+                </div>
+         
+
+                <input type="hidden" value="@Model.ID" />
+            </form>
+
+            <div id="errorMessage">
+
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button id="saveAction" type="button" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+        </div>
+    </div>
+}
+
+
+<script>
+
+    $("#saveAction").click(function () {
+      $.ajax({
+          method: "POST",
+          url: '@Url.Action("Action", "Roles")',
+          data: $("#actionForm").serialize()
+
+            })
+                .done(function (response) {
+
+                    if (response.Success) { // if json data called 'Success' is true
+
+                        location.reload(); // reload the current page
+
+                    } else {
+
+                        $("#errorMessage").html(response.Message) // show the content from the json data called 'Message'
+                    }
+
+                })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+
+                    alert("failed");
+
+                });
+
+    })
+
+</script>
+

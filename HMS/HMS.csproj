@@ -169,8 +169,10 @@
     <Compile Include="Areas\Dashboard\Controllers\AccomadationPackagesController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\AccomadationsController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\AccomadationTypesController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\RolesController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\UserController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
+    <Compile Include="Areas\Dashboard\ViewModels\RolesViewModels.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\UserViewModels.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\AccomadationsViewModels.cs" />
     <Compile Include="ViewModels\PaginationViewModel.cs" />
@@ -260,6 +262,10 @@
     <Content Include="Areas\Dashboard\Views\User\_Delete.cshtml" />
     <Content Include="Areas\Dashboard\Views\User\_Listing.cshtml" />
     <Content Include="Areas\Dashboard\Views\User\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Roles\_Action.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Roles\_Delete.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Roles\_Listing.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Roles\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

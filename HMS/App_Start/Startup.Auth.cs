@@ -21,6 +21,8 @@ namespace HMS
             app.CreatePerOwinContext(HMSContext.Create);
             app.CreatePerOwinContext<UserManager>(UserManager.Create);
             app.CreatePerOwinContext<SignInManager>(SignInManager.Create);
+            app.CreatePerOwinContext<RolesManager>(RolesManager.Create);
+
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider

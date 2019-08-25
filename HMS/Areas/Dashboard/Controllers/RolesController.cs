@@ -64,7 +64,6 @@ namespace HMS.Areas.Dashboard.Controllers
         {
             UserManager = userManager;
             SignInManager = signInManager;
-            SignInManager = signInManager;
             RolesManager = rolesManager;
         }
 

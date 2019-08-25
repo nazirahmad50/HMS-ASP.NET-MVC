@@ -15,12 +15,13 @@ namespace HMS.Areas.Dashboard.Controllers
 {
     public class UserController : Controller
     {
-        // private fields for signin manager and user manager
+        // private fields for signin manager, user manager and role manager
         // comoon practise of private fields is to used '_' before the field name
         private SignInManager _signInManager;
         private UserManager _userManager;
+        private RolesManager _rolesManager;
 
-        // properties for signin manager and user manager
+        // properties for signin manager, user manager and role manager
         public SignInManager SignInManager
         {
             get
@@ -43,16 +44,27 @@ namespace HMS.Areas.Dashboard.Controllers
                 _userManager = value;
             }
         }
+        public RolesManager RolesManager
+        {
+            get
+            {
+                return _rolesManager ?? HttpContext.GetOwinContext().Get<RolesManager>();
+            }
+            private set
+            {
+                _rolesManager = value;
+            }
+        }
 
         public UserController()
         {
         }
-
         // constructor dependancy injection
-        public UserController(UserManager userManager, SignInManager signInManager)
+        public UserController(UserManager userManager, SignInManager signInManager, RolesManager rolesManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            RolesManager = rolesManager;
         }
 
         #region SearchUsers Service
@@ -122,7 +134,7 @@ namespace HMS.Areas.Dashboard.Controllers
             {
 
                 Users = SearchUsers(searchTerm, roleID, pageSize, page.Value), // get users  based on the params
-                //Roles = AccomadationPackagesService.Instance.GetAllAccomadationPackages(), // get all accomadation Packages
+                Roles = RolesManager.Roles, // get all roles
                 RoleID = roleID,
                 Pager = new Pager(totalRecords, page, pageSize),
                 TotalRecords = totalRecords,
@@ -162,7 +174,7 @@ namespace HMS.Areas.Dashboard.Controllers
                 //model.AccomadationPackageID = accomadations.AccomadationPackageID;
 
             }
-            //model.Roles = AccomadationPackagesService.Instance.GetAllAccomadationPackages();
+            model.Roles = RolesManager.Roles;
 
 
             return PartialView("_Action", model);
@@ -259,5 +271,46 @@ namespace HMS.Areas.Dashboard.Controllers
             return json;
         }
         #endregion
+
+        [HttpGet]
+        public async Task<ActionResult> UserRoles(string ID)
+        {
+
+            UserRolesViewModel model = new UserRolesViewModel();
+
+            var user = await UserManager.FindByIdAsync(ID); // find users based on param ID
+            var userRoleIds = user.Roles.Select(x => x.RoleId).ToList(); // get all users that have role ids
+            model.UserRoles = RolesManager.Roles.Where(x => userRoleIds.Contains(x.Id)); // check if the roles manager roles contain those user role ids
+
+            model.Roles = RolesManager.Roles; // show all the roles
+
+            return PartialView("_UserRoles", model);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> UserRoles(UserActionViewModel model)
+        {
+
+            JsonResult json = new JsonResult { JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+            if (!string.IsNullOrEmpty(model.ID)) // Editing record
+            {
+                var user = await UserManager.FindByIdAsync(model.ID);
+
+                IdentityResult result = await UserManager.DeleteAsync(user);
+
+                json.Data = new { Success = result.Succeeded, Message = string.Join(",", result.Errors) };
+
+            }
+            else
+            {
+                json.Data = new { Success = false, Message = "Invalid User" };
+
+            }
+
+
+
+            return json;
+        }
     }
 }

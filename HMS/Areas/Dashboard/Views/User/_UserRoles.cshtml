@@ -1,0 +1,157 @@
+﻿@model HMS.Areas.Dashboard.ViewModels.UserRolesViewModel
+
+@if (Model != null)
+{
+
+    <div class="modal-content">
+        <div class="modal-header">
+        
+                <h5 class="modal-title"> User Roles</h5>
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+
+            <!--USER ROLES TABLE-->
+            @if (Model.UserRoles != null && Model.UserRoles.Count() > 0)
+            {
+                <table id="rolesTable" class="table table-striped">
+
+                    <thead>
+
+                        <!--Row tag-->
+                        <tr>
+
+                            <!--td is a cell-->
+                            <th class="font-weight-bold">Name</th>
+                            <th class="font-weight-bold">Action</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var item in Model.UserRoles)
+                        {
+                            <tr>
+
+                                <td>@item.Name</td>
+
+                                <td>
+
+                                    <button data-href="@Url.Action("DeleteUserRole", "User", new { ID = item.Id })" class="dataBtn btn btn-primary" type="button" data-toggle="modal" data-target="#actionModal">
+                                        <i class="fas fa-edit mr-1"></i>Remove
+                                    </button>
+                                </td>
+
+                            </tr>
+                        }
+
+
+                    </tbody>
+
+                </table>
+            }
+            else
+            {
+                <div class="alert alert-danger">
+                    No Roles Assigned
+                </div>
+            }
+
+            <!--AVAILABLE ROLES TABLE-->
+            @if (Model.Roles != null && Model.Roles.Count() > 0)
+            {
+                <table id="rolesTable" class="table table-striped">
+
+                    <thead>
+
+                        <!--Row tag-->
+                        <tr>
+
+                            <!--td is a cell-->
+                            <th class="font-weight-bold">Assign Roles</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var item in Model.Roles)
+                        {
+                            <tr>
+
+                                <td>@item.Name</td>
+
+                                <td>
+
+                                    <button data-href="@Url.Action("AssignUserRole", "User", new { ID = item.Id })" class="dataBtn btn btn-success" type="button" data-toggle="modal" data-target="#actionModal">
+                                        <i class="fas fa-edit mr-1"></i>Assign
+                                    </button>
+                                </td>
+
+                            </tr>
+                        }
+
+
+                    </tbody>
+
+                </table>
+            }
+            else
+            {
+                <div class="alert alert-danger">
+                    No Roles Available
+                </div>
+            }
+
+            <div id="errorMessage">
+
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button id="saveAction" type="button" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+        </div>
+    </div>
+}
+
+
+<script>
+
+    $("#saveAction").click(function () {
+      $.ajax({
+          method: "POST",
+          url: '@Url.Action("UserRoles", "User")',
+          data: $("#actionForm").serialize()
+
+            })
+                .done(function (response) {
+
+                    if (response.Success) { // if json data called 'Success' is true
+
+                        location.reload(); // reload the current page
+
+                    } else {
+
+                        $("#errorMessage").html(response.Message) // show the content from the json data called 'Message'
+                    }
+
+                })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+
+                    alert("failed");
+
+                });
+
+    })
+
+</script>
+

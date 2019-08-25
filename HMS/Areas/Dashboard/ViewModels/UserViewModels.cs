@@ -35,4 +35,14 @@ namespace HMS.Areas.Dashboard.ViewModels
 
 
     }
+    public class UserRolesViewModel
+    {
+     
+
+        public IEnumerable<IdentityRole> UserRoles { get; set; }
+        public IEnumerable<IdentityRole> Roles { get; set; }
+
+
+
+    }
 }

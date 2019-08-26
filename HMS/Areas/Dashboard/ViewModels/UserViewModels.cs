@@ -37,7 +37,8 @@ namespace HMS.Areas.Dashboard.ViewModels
     }
     public class UserRolesViewModel
     {
-     
+
+        public string ID { get; set; }
 
         public IEnumerable<IdentityRole> UserRoles { get; set; }
         public IEnumerable<IdentityRole> Roles { get; set; }

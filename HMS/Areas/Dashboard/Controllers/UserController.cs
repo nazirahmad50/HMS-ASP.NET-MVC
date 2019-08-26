@@ -15,6 +15,7 @@ namespace HMS.Areas.Dashboard.Controllers
 {
     public class UserController : Controller
     {
+
         // private fields for signin manager, user manager and role manager
         // comoon practise of private fields is to used '_' before the field name
         private SignInManager _signInManager;
@@ -67,8 +68,9 @@ namespace HMS.Areas.Dashboard.Controllers
             RolesManager = rolesManager;
         }
 
+
         #region SearchUsers Service
-        public IEnumerable<HMSUser> SearchUsers(string searchTerm, string roleID, int pageSize, int page)
+        public async Task<IEnumerable<HMSUser>> SearchUsers(string searchTerm, string roleID, int pageSize, int page)
         {
 
             var users = UserManager.Users;
@@ -82,8 +84,11 @@ namespace HMS.Areas.Dashboard.Controllers
             }
             if (!string.IsNullOrEmpty(roleID))
             {
-                // check if the searchterm exist in the database column Name
-                //users = users.Where(x => x.Email != null && x.Email.ToLower().Contains(searchTerm.ToLower()));
+                var role = await RolesManager.FindByIdAsync(roleID); // find the role based on the param roleID
+
+                var userIDs = role.Users.Select(x => x.UserId); // select the UserId column from the role users
+
+                users = users.Where(x => userIDs.Contains(x.Id)); // get users where the 'userIDs' contain the users id
             }
 
 
@@ -96,7 +101,7 @@ namespace HMS.Areas.Dashboard.Controllers
 
 
         }
-        public int SearchUsersCount(string searchTerm, string roleID)
+        public async Task<int> SearchUsersCount(string searchTerm, string roleID)
         {
 
             var users = UserManager.Users;
@@ -110,8 +115,11 @@ namespace HMS.Areas.Dashboard.Controllers
             }
             if (!string.IsNullOrEmpty(roleID))
             {
-                // check if the searchterm exist in the database column Name
-                //users = users.Where(x => x.Email != null && x.Email.ToLower().Contains(searchTerm.ToLower()));
+                var role = await RolesManager.FindByIdAsync(roleID); // find teh role based on the param roleID
+
+                var userIDs = role.Users.Select(x => x.UserId); // select the UserId column from the role users
+
+                users = users.Where(x => userIDs.Contains(x.Id)); // get users where the 'userIDs' contain the users id
             }
 
 
@@ -122,19 +130,20 @@ namespace HMS.Areas.Dashboard.Controllers
         }
         #endregion
 
-        public ActionResult Index(string searchTerm, string roleID, int? page)
+
+        public async Task<ActionResult> Index(string searchTerm, string roleID, int? page)
         {
             int pageSize = 1; //TODO: Set page size in Configuration
 
             page = page ?? 1; // The ?? operator returns the left-hand operand if it is not null, or else it returns the right operand
 
-            int totalRecords = SearchUsersCount(searchTerm,roleID); // get users count based on the params
+            int totalRecords = await SearchUsersCount(searchTerm,roleID); // get users count based on the params
 
             UserListingViewModel model = new UserListingViewModel
             {
 
-                Users = SearchUsers(searchTerm, roleID, pageSize, page.Value), // get users  based on the params
-                Roles = RolesManager.Roles, // get all roles
+                Users = await SearchUsers(searchTerm, roleID, pageSize, page.Value), // get users  based on the params
+                Roles = RolesManager.Roles, // show all roles
                 RoleID = roleID,
                 Pager = new Pager(totalRecords, page, pageSize),
                 TotalRecords = totalRecords,
@@ -272,45 +281,60 @@ namespace HMS.Areas.Dashboard.Controllers
         }
         #endregion
 
+        #region USER ROLES CRD
         [HttpGet]
         public async Task<ActionResult> UserRoles(string ID)
         {
 
             UserRolesViewModel model = new UserRolesViewModel();
+            model.ID = ID;
 
             var user = await UserManager.FindByIdAsync(ID); // find users based on param ID
             var userRoleIds = user.Roles.Select(x => x.RoleId).ToList(); // get all users that have role ids
             model.UserRoles = RolesManager.Roles.Where(x => userRoleIds.Contains(x.Id)); // check if the roles manager roles contain those user role ids
 
-            model.Roles = RolesManager.Roles; // show all the roles
+            model.Roles = RolesManager.Roles.Where(x => !userRoleIds.Contains(x.Id)); // dont show the role that is already assigned to the user
 
             return PartialView("_UserRoles", model);
         }
 
+        // Add & Delete user roles
         [HttpPost]
-        public async Task<JsonResult> UserRoles(UserActionViewModel model)
+        public async Task<JsonResult> UserRoleOperation(string userID, string roleID, bool isDelete = false)
         {
 
             JsonResult json = new JsonResult { JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
-            if (!string.IsNullOrEmpty(model.ID)) // Editing record
-            {
-                var user = await UserManager.FindByIdAsync(model.ID);
+            // find both the user and the role based on the ids passed through param
+            var user = await UserManager.FindByIdAsync(userID);
+            var role = await RolesManager.FindByIdAsync(roleID);
 
-                IdentityResult result = await UserManager.DeleteAsync(user);
+            if (user != null && role != null) // if both user and role is not null
+            {
+                IdentityResult result;
+
+                if (!isDelete) // Add role to user
+                {
+                    result = await UserManager.AddToRoleAsync(userID, role.Name);
+
+                }
+                else // delete role from user
+                {
+                    result = await UserManager.RemoveFromRoleAsync(userID, role.Name);
+
+                }
 
                 json.Data = new { Success = result.Succeeded, Message = string.Join(",", result.Errors) };
 
             }
             else
             {
-                json.Data = new { Success = false, Message = "Invalid User" };
+                json.Data = new { Success = false, Message = "Invalid Operation" };
 
             }
 
-
-
             return json;
         }
+        #endregion
     }
 }

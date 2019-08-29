@@ -1,0 +1,87 @@
+﻿@model HMS.ViewModels.AccomadationsViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<aside id="colorlib-hero">
+    <div class="flexslider">
+        <ul class="slides">
+            <li style="background-image: url(images/img_bg_5.jpg);">
+                <div class="overlay"></div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-md-offset-3 slider-text">
+                            <div class="slider-text-inner slider-text-inner2 text-center">
+                                <h2>Choose our Best</h2>
+                                <h1>Rooms &amp; Suites</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</aside>
+@if (Model != null && Model.AccomadationPackages != null && Model.AccomadationPackages.Count() > 0)
+{
+
+    <div id="colorlib-rooms" class="colorlib-light-grey">
+        <div class="container">
+            <div class="row">
+
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select Accomadation Package
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        @foreach (var item in Model.AccomadationPackages)
+                        {
+                            var selected = item.ID == Model.SelectedAccomadationPackageID ? "active" : string.Empty;
+                            
+                            <li class="@selected"><a href="@Url.Action("Index","Accomadations", new {accomadationTypeID=item.AccomadationTypeID,accomadationPackageID=item.ID})" >@item.Name</a></li>
+                        }
+
+                    </ul>
+              
+                </div>
+
+
+                @if (Model.Accomadations != null && Model.Accomadations.Count() > 0)
+                {
+                    foreach (var item in Model.Accomadations)
+                    {
+                        <div class="col-md-4 room-wrap animate-box">
+                            <a href="images/room-1.jpg" class="room image-popup-link" style="background-image: url(images/room-1.jpg);"></a>
+                            <div class="desc text-center">
+                                <span class="rate-star"><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span>
+                                <h3><a href="rooms-suites.html">@item.Name</a></h3>
+                                <p class="price">
+                                    <span class="currency">£</span> <!--TODO: add currency in Configuration-->
+                                    <span class="price-room">@item.AccomadationPackage.FeePerNight</span>
+                                    <span class="per">/ per night</span>
+                                </p>
+                                <ul>
+                                    <li><i class="icon-check"></i> @item.AccomadationPackage.NoOfRoom Rooms</li>
+
+                                </ul>
+                                <p><a class="btn btn-primary">Book now!</a></p>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="alert alert-warning" role="alert">
+                        No Accomadations Available
+                    </div>
+                }
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+}

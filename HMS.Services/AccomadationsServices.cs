@@ -145,5 +145,18 @@ namespace HMS.Services
 
         }
 
+
+        #region Front End
+
+        public IEnumerable<Accomadation> GetAllAccomadationsByAccomadationPackage(int accomadationPackageID)
+        {
+
+            var context = new HMSContext();
+
+            return context.Accomadation.Where(x => x.AccomadationPackageID == accomadationPackageID).AsEnumerable();
+
+
+        }
+        #endregion
     }
 }

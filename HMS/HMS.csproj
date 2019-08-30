@@ -170,6 +170,7 @@
     <Compile Include="Areas\Dashboard\Controllers\AccomadationsController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\AccomadationTypesController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\RolesController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\SharedDashboardController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\UserController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\RolesViewModels.cs" />
@@ -358,6 +359,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Dashboard\Models\" />
+    <Folder Include="Areas\Dashboard\Views\SharedDashboard\" />
+    <Folder Include="images\site\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css.map" />

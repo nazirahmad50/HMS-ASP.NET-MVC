@@ -7,7 +7,7 @@
         <div class="modal-header">
             @if (Model.ID > 0)
             {
-            <h5 class="modal-title"> Edit Accomadation Package</h5>
+                <h5 class="modal-title"> Edit Accomadation Package</h5>
 
             }
             else
@@ -51,6 +51,12 @@
                     <label>Fee Per Night</label>
                     <input class="form-control" name="FeePerNight" placeholder="Enter Accomadation Package FeePerNight" value="@Model.FeePerNight">
                 </div>
+
+                <div class="form-group">
+                    <label>Picture</label>
+                    <input id="selectPic" class="form-control" name="Picture" type="file" multiple>
+                </div>
+
                 <input type="hidden" value="@Model.ID" />
             </form>
 
@@ -96,6 +102,41 @@
                 });
 
     })
+
+
+    $("#selectPic").change(function () { // do something on change
+
+        var pictures = this.files; // var pictures will hold the files selected by the user
+
+        // 'FormData' construct a set of key/value pairs representing form fields and their values, which can then be easily sent using the XMLHttpRequest.send() method.
+        var formData = new FormData();
+
+        // store each pic as value in the formData on key 'Picture'
+        for (var i = 0; i < pictures.length; i++) {
+            formData.append("Picture", pictures[i])
+        }
+
+      $.ajax({
+          method: "POST",
+          url: '@Url.Action("UplaodPicture", "SharedDashboard")',
+          data: formData,
+          // need these both for uploading pictures
+          processData: false,
+          contentType: false
+
+            })
+                .done(function (response) {
+
+
+                })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+
+                    alert("failed");
+
+                });
+
+    })
+
 
 </script>
 

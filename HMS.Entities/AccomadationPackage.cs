@@ -20,6 +20,9 @@ namespace HMS.Entities
         // virtual allows us to access the props of the AccomadationType object
         public virtual AccomadationType AccomadationType { get; set; } // AccomadationType object
 
+        public List<AccomadationPackagePicture> AccomadationPackagePictures { get; set; }
+
+
 
     }
 }

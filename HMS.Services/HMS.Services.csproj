@@ -80,6 +80,7 @@
     <Compile Include="AccomadationTypesService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RolesManager.cs" />
+    <Compile Include="SharedDashboardService.cs" />
     <Compile Include="SignInManager.cs" />
     <Compile Include="UserManager.cs" />
   </ItemGroup>

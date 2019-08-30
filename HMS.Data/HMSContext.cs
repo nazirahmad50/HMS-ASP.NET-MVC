@@ -29,6 +29,9 @@ namespace HMS.Data
         public DbSet<Accomadation> Accomadation { get; set; }
         public DbSet<Booking> Booking { get; set; }
 
+        public DbSet<Picture> Picture { get; set; }
+
+
 
     }
 }

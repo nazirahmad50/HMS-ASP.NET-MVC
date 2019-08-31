@@ -169,5 +169,19 @@ namespace HMS.Services
 
 
         #endregion
+
+        #region Pictures
+
+        public List<AccomadationPackagePicture> GetPicturesByAccomadationPackageID(int accomadationtypePckageID)
+        {
+
+            var context = new HMSContext();
+
+            return context.AccomadationPackage.Find(accomadationtypePckageID).AccomadationPackagePictures.ToList();
+
+
+        }
+
+        #endregion
     }
 }

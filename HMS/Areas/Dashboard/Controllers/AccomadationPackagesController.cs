@@ -56,8 +56,13 @@ namespace HMS.Areas.Dashboard.Controllers
                 model.FeePerNight = accomadationPackage.FeePerNight;
                 model.AccomadationTypeID = accomadationPackage.AccomadationTypeID;
 
+                // get 'AccomadationPackagePictures' by accomadationPackage id
+                model.AccomadationPackagePictures = AccomadationPackagesService.Instance.GetPicturesByAccomadationPackageID(accomadationPackage.ID);
+
             }
             model.AccomadationTypes = AccomadationTypesService.Instance.GetAllAccomadationTypes();
+
+
 
 
             return PartialView("_Action", model);
@@ -94,9 +99,16 @@ namespace HMS.Areas.Dashboard.Controllers
                     NoOfRoom = model.NoOfRoom,
                     FeePerNight = model.FeePerNight,
                     AccomadationTypeID = model.AccomadationTypeID,
-
-
                 }; // create AccomadationType object and set its props
+
+                //--------------------Saving pictures to database AccomadationPackagePictures----------------
+                List<int> picIds = model.PictureIds.Split(',').Select(x => int.Parse(x)).ToList(); // split the pictureIds and convert them all to int and store in a list
+
+                var pictures = SharedDashboardService.Instance.getPicturesByIds(picIds); // get pictures from 'Picture' database based on the list picIds
+
+                accomadationPackage.AccomadationPackagePictures = new List<AccomadationPackagePicture>(); // instantiate new 'AccomadationPackagePicture' list
+                // add each picture id from Picture database on the AccomadationPackagePicture prop called PictureID
+                accomadationPackage.AccomadationPackagePictures.AddRange(pictures.Select(x => new AccomadationPackagePicture {PictureID = x.ID }));
 
                 result = AccomadationPackagesService.Instance.SaveAccomadationPackages(accomadationPackage); // save accomadationPackage in database
             }

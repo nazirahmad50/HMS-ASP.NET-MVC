@@ -55,6 +55,20 @@
                 <div class="form-group">
                     <label>Picture</label>
                     <input id="selectPic" class="form-control" name="Picture" type="file" multiple>
+                    <input type="hidden" name="PictureIds" id="picIds" />
+                </div>
+
+                <div id="pictureArea">
+
+                    @if (Model.AccomadationPackagePictures != null && Model.AccomadationPackagePictures.Count() > 0)
+                    {
+                        foreach (var item in Model.AccomadationPackagePictures)
+                        {
+                            <img src="/images/site/@item.Picture.URL" class="img-fluid" style="width:230px" onclick="removePic(this)" data-id="@item.PictureID" />
+                        }
+                    }
+
+
                 </div>
 
                 <input type="hidden" value="@Model.ID" />
@@ -67,16 +81,34 @@
         </div>
         <div class="modal-footer">
             <button id="saveAction" type="button" class="btn btn-primary">Save</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
 
         </div>
     </div>
 }
 
+<div id="imgTemplate">
+    <img src="" class="img-fluid" style="width:230px" onclick="removePic(this)" /> <!--Add inline function called removeItem and pass the this context -->
+</div>
 
 <script>
 
     $("#saveAction").click(function () {
+
+        var picIdsArray = []; // empty array
+
+        $("#pictureArea img").each(function () { // loop thorugh each 'img' tag inside the 'pictureArea' div
+
+            var imgIds = $(this).attr("data-id"); // get the value from the attribute 'data-id' for each img
+
+            picIdsArray.push(imgIds); // add imgIds to picIdsArray
+        });
+
+        // join the values in the picIdsArray for e.g. 44,36,55
+        // then add them to the attr 'value' of the id 'picIds'
+        // becasue after we use '$("#actionForm").serialize()' in ajax which will have the values for name PictureIds, for e.g. PictureIds="44,36,55"
+        $("#picIds").val(picIdsArray.join()); 
+        
       $.ajax({
           method: "POST",
           url: '@Url.Action("Action", "AccomadationPackages")',
@@ -127,15 +159,38 @@
             })
                 .done(function (response) {
 
+                    for (var i = 0; i < response.length; i++) { // loop through the response
+
+                        var picture = response[i]; // store each response in var 'picture' through each loop iteration
+
+                        var imgHtml = $("#imgTemplate").clone(); // clone the 'imgTemplate' div
+
+                        // find the 'img' tag and set its attribute 'src' to the filepath and the picture url
+                        imgHtml.find("img").attr("src", "/images/site/" + picture.URL);
+
+                        imgHtml.find("img").attr("data-id", picture.ID);
+
+
+                        // append the html of div 'imgTemplate' to  div 'pictureArea'
+                        // 'imgHtml' html will be the img tags
+                        $("#pictureArea").append(imgHtml.html());
+
+                    }
 
                 })
-                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+          .fail(function (XMLHttpRequest, textStatus, errorThrown) {
 
-                    alert("failed");
+              alert("failed");
 
                 });
 
     })
+
+    // 'e' is the 'img' tag element
+    function removePic(e) {
+        e.remove();
+        //TODO: Try to remove the pictures from the Picture database as well
+    }
 
 
 </script>

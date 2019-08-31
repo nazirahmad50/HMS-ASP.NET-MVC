@@ -25,9 +25,13 @@ namespace HMS.Areas.Dashboard.ViewModels
         public decimal FeePerNight { get; set; }
         public string Name { get; set; }
 
+        public string PictureIds { get; set; }
+
         public int AccomadationTypeID { get; set; }
         public AccomadationType AccomadationType { get; set; }
         public IEnumerable<AccomadationType>  AccomadationTypes { get; set; } // AccomadationType object
+
+        public List<AccomadationPackagePicture> AccomadationPackagePictures { get; set; }
     }
 
 }

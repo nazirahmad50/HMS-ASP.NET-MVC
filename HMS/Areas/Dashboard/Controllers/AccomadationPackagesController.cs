@@ -75,37 +75,42 @@ namespace HMS.Areas.Dashboard.Controllers
             JsonResult json = new JsonResult { JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
             bool result;
+
+            // if 'PictureIds' is not null or empty then split them and convert each one to an int and add to list, otherwise if its null or empty then create new int list
+            List<int> picIds = !string.IsNullOrEmpty(model.PictureIds) ? model.PictureIds.Split(',').Select(x => int.Parse(x)).ToList() : new List<int>(); 
+
+            var pictures = SharedDashboardService.Instance.getPicturesByIds(picIds); // get pictures from 'Picture' database based on the list picIds
+
             if (model.ID > 0) // Editing record
             {
+                var accomadationPackage = AccomadationPackagesService.Instance.GetAccomadationPackagesByID(model.ID);
 
-                AccomadationPackage accomadationPackage = new AccomadationPackage {
-                    ID = model.ID,
-                    Name = model.Name,
-                    NoOfRoom = model.NoOfRoom,
-                    FeePerNight = model.FeePerNight,
-                    AccomadationTypeID = model.AccomadationTypeID,
-                  
-                };
+                accomadationPackage.Name = model.Name;
+                accomadationPackage.NoOfRoom = model.NoOfRoom;
+                accomadationPackage.FeePerNight = model.FeePerNight;
+                accomadationPackage.AccomadationTypeID = model.AccomadationTypeID;
+
+                //--------------------Saving pictures to database AccomadationPackagePictures---------------
+                accomadationPackage.AccomadationPackagePictures.Clear(); // clear AccomadationPackagePictures list
+                // add each picture id from Picture database on the AccomadationPackagePicture prop called PictureID
+                accomadationPackage.AccomadationPackagePictures.AddRange(pictures.Select(x => new AccomadationPackagePicture {AccomadationPackageID=accomadationPackage.ID, PictureID = x.ID }));
 
                 result = AccomadationPackagesService.Instance.UpdateAccomadationPackages(accomadationPackage); // update accomadation packages in databse
+
+
 
             }
             else // Saving record
             {
                 AccomadationPackage accomadationPackage = new AccomadationPackage
                 {
-                    ID = model.ID,
                     Name = model.Name,
                     NoOfRoom = model.NoOfRoom,
                     FeePerNight = model.FeePerNight,
                     AccomadationTypeID = model.AccomadationTypeID,
                 }; // create AccomadationType object and set its props
 
-                //--------------------Saving pictures to database AccomadationPackagePictures----------------
-                List<int> picIds = model.PictureIds.Split(',').Select(x => int.Parse(x)).ToList(); // split the pictureIds and convert them all to int and store in a list
-
-                var pictures = SharedDashboardService.Instance.getPicturesByIds(picIds); // get pictures from 'Picture' database based on the list picIds
-
+                //--------------------Saving pictures to database AccomadationPackagePictures---------------
                 accomadationPackage.AccomadationPackagePictures = new List<AccomadationPackagePicture>(); // instantiate new 'AccomadationPackagePicture' list
                 // add each picture id from Picture database on the AccomadationPackagePicture prop called PictureID
                 accomadationPackage.AccomadationPackagePictures.AddRange(pictures.Select(x => new AccomadationPackagePicture {PictureID = x.ID }));

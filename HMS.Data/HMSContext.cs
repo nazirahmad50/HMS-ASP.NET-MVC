@@ -25,8 +25,13 @@ namespace HMS.Data
 
         // Tables in database
         public DbSet<AccomadationType> AccomadationType { get; set; }
+
         public DbSet<AccomadationPackage> AccomadationPackage { get; set; }
+        public DbSet<AccomadationPackagePicture> AccomadationPackagePicture { get; set; }
+
         public DbSet<Accomadation> Accomadation { get; set; }
+        public DbSet<AccomadationsPicture> AccomadationsPicture { get; set; }
+
         public DbSet<Booking> Booking { get; set; }
 
         public DbSet<Picture> Picture { get; set; }

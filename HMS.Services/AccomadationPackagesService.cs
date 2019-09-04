@@ -67,14 +67,12 @@ namespace HMS.Services
 
         public AccomadationPackage GetAccomadationPackagesByID(int ID)
         {
+          
+                var context = new HMSContext();
+     
+             return context.AccomadationPackage.Find(ID);
 
-            // in Post Delete method we are calling 'GetAccomadationsByID' 'DeleteAccomadations' services one after another
-            // so we have to dispose of one of these context as we are calling two services in the post Delete method
-            using (var context = new HMSContext())
-            {
-                return context.AccomadationPackage.Find(ID);
-
-            }
+            
 
 
         }
@@ -97,7 +95,14 @@ namespace HMS.Services
 
             var context = new HMSContext();
 
-            context.Entry(accomadationPackage).State = System.Data.Entity.EntityState.Modified; // modify the accomadation package 
+            var existingAccomadationpackage = context.AccomadationPackage.Find(accomadationPackage.ID); // find existing accomadatioPackages
+
+            context.AccomadationPackagePicture.RemoveRange(existingAccomadationpackage.AccomadationPackagePictures); // remove exisitng AccomadationPackage Pictures from db AccomadationPackagePictures 
+
+            // set the current values for existingAccomadationpackage, this does not include other objects such as AccomadationPackagePicture
+            context.Entry(existingAccomadationpackage).CurrentValues.SetValues(accomadationPackage); 
+
+            context.AccomadationPackagePicture.AddRange(accomadationPackage.AccomadationPackagePictures); // add AccomadationPackagePictures from param accomadationPackage to db AccomadationPackagePicture
 
             return context.SaveChanges() > 0;
 
@@ -106,6 +111,7 @@ namespace HMS.Services
 
         public bool DeleteAccomadationPackages(AccomadationPackage accomadationPackage)
         {
+
 
             var context = new HMSContext();
 

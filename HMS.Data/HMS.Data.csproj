@@ -79,6 +79,10 @@
     <Compile Include="Migrations\201908301709451_addPictureEntity.Designer.cs">
       <DependentUpon>201908301709451_addPictureEntity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909041639453_addAccomadationPictureTables.cs" />
+    <Compile Include="Migrations\201909041639453_addAccomadationPictureTables.Designer.cs">
+      <DependentUpon>201909041639453_addAccomadationPictureTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -110,6 +114,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908301709451_addPictureEntity.resx">
       <DependentUpon>201908301709451_addPictureEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909041639453_addAccomadationPictureTables.resx">
+      <DependentUpon>201909041639453_addAccomadationPictureTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

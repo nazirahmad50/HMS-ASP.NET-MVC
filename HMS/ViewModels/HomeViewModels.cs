@@ -9,5 +9,7 @@ namespace HMS.ViewModels
     public class HomeViewModel
     {
         public IEnumerable<AccomadationType> AccomadationTypes { get; set; }
+        public IEnumerable<AccomadationPackage> AccomadationPackages { get; set; }
+
     }
 }

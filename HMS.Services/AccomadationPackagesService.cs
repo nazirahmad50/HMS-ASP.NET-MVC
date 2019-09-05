@@ -97,7 +97,8 @@ namespace HMS.Services
 
             var existingAccomadationpackage = context.AccomadationPackage.Find(accomadationPackage.ID); // find existing accomadatioPackages
 
-            context.AccomadationPackagePicture.RemoveRange(existingAccomadationpackage.AccomadationPackagePictures); // remove exisitng AccomadationPackage Pictures from db AccomadationPackagePictures 
+            // remove exisitng AccomadationPackage Pictures from db AccomadationPackagePictures 
+            context.AccomadationPackagePicture.RemoveRange(existingAccomadationpackage.AccomadationPackagePictures); 
 
             // set the current values for existingAccomadationpackage, this does not include other objects such as AccomadationPackagePicture
             context.Entry(existingAccomadationpackage).CurrentValues.SetValues(accomadationPackage); 
@@ -115,7 +116,12 @@ namespace HMS.Services
 
             var context = new HMSContext();
 
-            context.Entry(accomadationPackage).State = System.Data.Entity.EntityState.Deleted; // delete accomadation package 
+            var existingAccomadationpackage = context.AccomadationPackage.Find(accomadationPackage.ID); // find existing accomadatioPackages
+
+            // remove exisitng AccomadationPackage Pictures from db AccomadationPackagePictures 
+            context.AccomadationPackagePicture.RemoveRange(existingAccomadationpackage.AccomadationPackagePictures);
+
+            context.Entry(existingAccomadationpackage).State = System.Data.Entity.EntityState.Deleted; // delete accomadation package 
 
             return context.SaveChanges() > 0;
 

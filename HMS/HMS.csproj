@@ -460,6 +460,7 @@
     <Content Include="fonts\icomoon\icomoon.woff" />
     <None Include="packages.config" />
     <Content Include="Views\Accomadations\Index.cshtml" />
+    <Content Include="Views\Accomadations\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HMS.Data\HMS.Data.csproj">

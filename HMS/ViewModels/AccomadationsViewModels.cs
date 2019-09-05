@@ -14,4 +14,10 @@ namespace HMS.ViewModels
         public IEnumerable<Accomadation> Accomadations { get; set; }
         public int SelectedAccomadationPackageID { get; set; }
     }
+
+    public class AccomadationsDetailViewModel
+    {
+        public AccomadationPackage AccomadationPackage { get; set; }
+
+    }
 }

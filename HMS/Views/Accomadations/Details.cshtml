@@ -1,0 +1,71 @@
+﻿@model HMS.ViewModels.AccomadationsDetailViewModel
+@{
+    ViewBag.Title = "Details";
+}
+
+@if (Model.AccomadationPackage != null)
+{
+
+    // if AccomadationPackagePictures is not null and its count is more than 0 then show first accomadation package picture out of the multiple pics, otherwise create new  AccomadationPackagePicture object
+    var thumbnailPic = Model.AccomadationPackage.AccomadationPackagePictures != null && Model.AccomadationPackage.AccomadationPackagePictures.Count() > 0 ? Model.AccomadationPackage.AccomadationPackagePictures.First() : new HMS.Entities.AccomadationPackagePicture();
+
+    // if 'thumbnailPic' is not null then show accomadation package picture url, otherwise show a default picture
+    var thumbnailUrl = thumbnailPic.Picture != null ? thumbnailPic.Picture.URL : "default-image.png";
+
+    <aside id="colorlib-hero">
+        <div class="flexslider">
+            <ul class="slides">
+                <li style="background-image: url(/images/site/@thumbnailUrl);">
+                    <div class="overlay"></div>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-md-offset-3 slider-text">
+                                <div class="slider-text-inner slider-text-inner2 text-center">
+                                    <h2>@Model.AccomadationPackage.AccomadationType.Name</h2>
+                                    <h1>@Model.AccomadationPackage.Name</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <div id="colorlib-amenities">
+        <div class="container">
+            <div class="row">
+                <div class="amenities-flex">
+                    <div class="desc animate-box">
+                        <p class="price">
+                            <span class="currency">£</span> <!--TODO: do currency in Configuration-->
+
+                            <span class="price-room">@Model.AccomadationPackage.FeePerNight</span>
+                            <span class="per">/per night</span>
+
+                        </p>
+                        <strong>@Model.AccomadationPackage.NoOfRoom Rooms</strong>
+                    </div>
+
+                    @if (Model.AccomadationPackage.AccomadationPackagePictures != null & Model.AccomadationPackage.AccomadationPackagePictures.Count() > 0)
+                    {
+                        foreach (var item in Model.AccomadationPackage.AccomadationPackagePictures)
+                        {
+
+
+                            // if 'thumbnailPic' is not null then show accomadation package picture url, otherwise show a default picture
+                            var imgUrl = item.Picture != null ? item.Picture.URL : "default-image.png";
+
+                            <div class="amenities-img animate-box" style="height:400px; background-image: url(/images/site/@thumbnailUrl);"></div>
+
+                        }
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
